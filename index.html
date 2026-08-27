@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0f5db7">
+  <title>Menù | La Rosa dei Venti</title>
+  <style>
+    :root{
+      --blue:#0f5db7;
+      --blue-dark:#0a4386;
+      --cream:#fffdf0;
+      --paper:#fffef8;
+      --text:#17324d;
+      --muted:#60758a;
+      --line:#cfdced;
+      --green:#6fa53f;
+      --shadow:0 10px 30px rgba(19,55,92,.08);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Arial, Helvetica, sans-serif;
+      background:linear-gradient(180deg,#fffdf2 0%,#f8fbff 100%);
+      color:var(--text);
+      line-height:1.45;
+    }
+    .hero{
+      background:
+        radial-gradient(circle at top right, rgba(255,255,255,.16), transparent 35%),
+        linear-gradient(135deg,var(--blue-dark),var(--blue));
+      color:#fff;
+      padding:48px 20px 36px;
+      text-align:center;
+    }
+    .brand{
+      max-width:900px;
+      margin:0 auto;
+    }
+    .eyebrow{
+      font-size:.86rem;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      font-weight:700;
+      opacity:.9;
+    }
+    h1{
+      margin:8px 0 6px;
+      font-size:clamp(2.2rem,7vw,4.4rem);
+      line-height:1;
+      letter-spacing:-.03em;
+      font-style:italic;
+    }
+    .subtitle{
+      margin:8px auto 0;
+      max-width:700px;
+      opacity:.95;
+      font-size:1.05rem;
+    }
+    .intro{
+      max-width:900px;
+      margin:20px auto 0;
+      font-size:.96rem;
+      opacity:.94;
+    }
+    .nav-wrap{
+      position:sticky;
+      top:0;
+      z-index:20;
+      background:rgba(255,255,255,.96);
+      backdrop-filter:blur(12px);
+      border-bottom:1px solid #e1e8f0;
+    }
+    .nav{
+      max-width:1180px;
+      margin:auto;
+      display:flex;
+      gap:8px;
+      overflow-x:auto;
+      padding:10px 14px;
+      scrollbar-width:none;
+    }
+    .nav::-webkit-scrollbar{display:none}
+    .nav a{
+      flex:0 0 auto;
+      color:var(--blue-dark);
+      text-decoration:none;
+      font-weight:800;
+      font-size:.9rem;
+      padding:9px 13px;
+      border-radius:999px;
+      background:#f0f6fd;
+      border:1px solid #dbe9f8;
+    }
+    .nav a:hover{background:#e4f0fc}
+    .toolbar{
+      max-width:1180px;
+      margin:22px auto 0;
+      padding:0 16px;
+    }
+    .search{
+      width:100%;
+      max-width:560px;
+      display:block;
+      margin:auto;
+      padding:14px 16px;
+      border:1px solid #cad8e8;
+      border-radius:14px;
+      background:#fff;
+      font-size:1rem;
+      outline:none;
+      box-shadow:var(--shadow);
+    }
+    .search:focus{border-color:var(--blue)}
+    main{
+      max-width:1180px;
+      margin:0 auto;
+      padding:20px 16px 60px;
+    }
+    section{
+      scroll-margin-top:78px;
+      margin:28px 0 42px;
+    }
+    .section-title{
+      display:flex;
+      align-items:end;
+      gap:14px;
+      margin-bottom:16px;
+      border-bottom:3px solid var(--blue);
+      padding-bottom:8px;
+    }
+    .section-title h2{
+      margin:0;
+      color:var(--blue);
+      font-style:italic;
+      font-size:clamp(1.8rem,4vw,2.7rem);
+      letter-spacing:-.02em;
+    }
+    .section-title span{
+      color:var(--muted);
+      font-weight:700;
+      font-size:.9rem;
+      padding-bottom:4px;
+    }
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:12px;
+    }
+    .item{
+      background:rgba(255,255,255,.9);
+      border:1px solid #e2eaf3;
+      border-radius:16px;
+      padding:14px 16px;
+      box-shadow:0 4px 14px rgba(17,56,95,.045);
+    }
+    .item-head{
+      display:flex;
+      justify-content:space-between;
+      gap:16px;
+      align-items:baseline;
+    }
+    .name{
+      font-weight:900;
+      color:var(--blue-dark);
+      text-transform:uppercase;
+      font-style:italic;
+      letter-spacing:.01em;
+    }
+    .price{
+      white-space:nowrap;
+      font-weight:900;
+      color:var(--blue);
+      font-size:1.02rem;
+    }
+    .desc{
+      color:#4f657a;
+      margin-top:3px;
+      font-size:.92rem;
+    }
+    .tag{
+      display:inline-block;
+      margin-left:5px;
+      font-size:.82em;
+      font-style:normal;
+    }
+    .veg{color:var(--green)}
+    .frozen{color:#2c9bcb}
+    .note-card{
+      background:#f4f8fd;
+      border:1px solid #d7e4f1;
+      border-left:4px solid var(--blue);
+      border-radius:12px;
+      padding:14px 16px;
+      color:#405a73;
+      margin:14px 0;
+      font-size:.95rem;
+    }
+    .subhead{
+      grid-column:1/-1;
+      color:var(--blue);
+      margin:12px 0 -2px;
+      font-size:1.35rem;
+      font-style:italic;
+      font-weight:900;
+      border-bottom:1px solid var(--line);
+      padding-bottom:6px;
+    }
+    .wine-group{
+      margin-top:16px;
+    }
+    .wine-group h3{
+      color:var(--blue-dark);
+      font-size:1.6rem;
+      font-style:italic;
+      margin:14px 0 10px;
+    }
+    footer{
+      text-align:center;
+      padding:26px 16px 40px;
+      color:#6c7d8d;
+      font-size:.9rem;
+    }
+    .legend{
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+      margin:12px 0 0;
+      color:#526a80;
+      font-size:.88rem;
+    }
+    .titleSite{
+      font-size: 1.5rem;
+      font-weight: bold;
+      font-style:italic;
+      color: var(white);
+      margin-bottom: 8px;
+    }
+    .hidden{display:none !important}
+    @media (max-width:760px){
+      .hero{padding-top:36px}
+      .grid{grid-template-columns:1fr}
+      .section-title{align-items:flex-start;flex-direction:column;gap:2px}
+      .section-title span{padding-bottom:0}
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="brand">
+
+      <div class="titleSite"><h2>PIZZERIA</h2></div>
+      <img src="logoRDV1.png">
+      <p class="intro">
+        Dopo 60 anni di gestione del bar-pizzeria “Bar Sport”, la famiglia Furzi decide di separare le due attività e far nascere,
+        nel 2006, la pizzeria “La Rosa dei Venti”. La pizzeria è a conduzione familiare e offre, oltre ad una svariata scelta di pizze
+        tradizionali, anche servizio ristorante con piatti tipici della tradizione paesana e appartamenti casa vacanze.
+        Da sempre la famiglia Furzi offre alla propria clientela prodotti di ottima qualità con tutta l’esperienza e la cordialità
+        che li contraddistingue. Consigliatissima da molti la pizza “Rosa dei Venti”.
+      </p>
+      <div class="titleSite"><h2>Buon Appetito!</h2></div>
+    </div>
+  </header>
+
+  <div class="nav-wrap">
+    <nav class="nav">
+      <a href="#antipasti">Antipasti</a>
+      <a href="#fritture">Fritture</a>
+      <a href="#pizza">Pizza</a>
+      <a href="#calzoni">Calzoni</a>
+      <a href="#focacce">Focacce</a>
+      <a href="#schiacce">Schiacce</a>
+      <a href="#pomodoro">Pomodoro</a>
+      <a href="#cucina">Cucina</a>
+      <a href="#dolci">Dolci</a>
+      <a href="#drinks">Drinks</a>
+      <a href="#birre">Birre</a>
+      <a href="#vini">Vini</a>
+    </nav>
+  </div>
+
+  <main>
+
+    <div class="note-card">
+        Coperto € 1
+    </div>
+
+    <section id="antipasti">
+      <div class="section-title"><h2>Antipasti</h2></div>
+      <div class="grid">
+        <div class="item"><div class="item-head"><div class="name">Affettato misto</div><div class="price">€ 6.00</div></div></div>
+        <div class="item"><div class="item-head"><div class="name">Insalata di mare <sup>(14)</sup></div><div class="price">€ 8.00</div></div></div>
+        <div class="item"><div class="item-head"><div class="name">Bruschetta <sup>(1)</sup> <span class="tag veg">🌿</span></div><div class="price">€ 3.00</div></div><div class="desc">al pomodoro · ai fagioli · all’olio</div></div>
+        <div class="item"><div class="item-head"><div class="name">Tris bruschette <sup>(1)</sup> <span class="tag veg">🌿</span></div><div class="price">€ 4.50</div></div></div>
+        <div class="item"><div class="item-head"><div class="name">Crostoni caldi <sup>(1-4-7)</sup></div><div class="price">€ 3.00</div></div><div class="desc">mozzarella e crudo · mozzarella e alici · mozzarella e tartufo · stracchino e salsiccia</div></div>
+        <div class="item"><div class="item-head"><div class="name">Crostoni caldi misti <sup>(1-4-7)</sup></div><div class="price">€ 3.00</div></div><div class="desc">stracchino e salsiccia, mozzarella e alici, mozzarella e prosciutto</div></div>
+        <div class="item"><div class="item-head"><div class="name">Crostone alla romana <sup>(1-4-7)</sup></div><div class="price">€ 7.00</div></div><div class="desc">mozzarella, prosciutto crudo, alici, salsa di pomodoro</div></div>
+        <div class="item"><div class="item-head"><div class="name">Crostone Norcia <sup>(1-7)</sup></div><div class="price">€ 7.00</div></div><div class="desc">mozzarella, salsa tartufo, salsiccia</div></div>
+        <div class="item"><div class="item-head"><div class="name">Crostone Sport <sup>(1-4-7)</sup></div><div class="price">€ 7.00</div></div><div class="desc">mix crostoni e bruschette</div></div>
+        <div class="item"><div class="item-head"><div class="name">Pecorino di Castell’Azzara <sup>(7)</sup></div><div class="price">€ 5.00</div></div></div>
+        <div class="item"><div class="item-head"><div class="name">Pecorino e marmellate <sup>(7)</sup> <span class="tag veg">🌿</span></div><div class="price">€ 6.00</div></div></div>
+        <div class="item"><div class="item-head"><div class="name">Schiaccina burrata e alici <sup>(4-7)</sup></div><div class="price">€ 6.00</div></div></div>
+        <div class="item"><div class="item-head"><div class="name">Schiaccina burrata e salmone <sup>(4-7)</sup></div><div class="price">€ 6.00</div></div></div>
+      </div>
+    </section>
+
+    <section id="fritture">
+      <div class="section-title"><h2>Fritture</h2><span>(1-3-5)</span></div>
+      <div class="grid">
+        <div class="item"><div class="item-head"><div class="name">Fiore di zucca <span class="tag veg">🌿</span></div><div class="price">€ 4.00</div></div><div class="desc">6 pezzi</div></div>
+        <div class="item"><div class="item-head"><div class="name">Mozzarelline <span class="tag veg">🌿</span></div><div class="price">€ 4.00</div></div><div class="desc">8 pezzi</div></div>
+        <div class="item"><div class="item-head"><div class="name">Crocchette di patate <span class="tag veg">🌿</span></div><div class="price">€ 4.00</div></div><div class="desc">6 pezzi</div></div>
+        <div class="item"><div class="item-head"><div class="name">Supplì di riso</div><div class="price">€ 2.00</div></div><div class="desc">al pezzo</div></div>
+        <div class="item"><div class="item-head"><div class="name">Olive all’ascolana</div><div class="price">€ 4.00</div></div><div class="desc">8 pezzi</div></div>
+        <div class="item"><div class="item-head"><div class="name">Alette di pollo</div><div class="price">€ 6.00</div></div><div class="desc">5 pezzi</div></div>
+        <div class="item"><div class="item-head"><div class="name">Patatine <span class="tag veg">🌿</span></div><div class="price">€ 4.00</div></div></div>
+        <div class="item"><div class="item-head"><div class="name">Misto di verdure <span class="tag veg">🌿</span></div><div class="price">€ 5.00</div></div></div>
+        <div class="item"><div class="item-head"><div class="name">Misto fritto</div><div class="price">€ 6.00</div></div><div class="desc">patatine, olive, crocchette</div></div>
+      </div>
+    </section>
+
+    <section id="pizza">
+      <div class="section-title"><h2>Pizza</h2><span>base pomodoro e mozzarella · (1-7)</span></div>
+      <div class="grid">
+        <div class="item"><div class="item-head"><div class="name">Margherita <sup>(7)</sup></div><div class="price">€ 6.00</div></div><div class="desc">pomodoro, mozzarella</div></div>
+        <div class="item"><div class="item-head"><div class="name">Bufala <sup>(7)</sup></div><div class="price">€ 8.00</div></div><div class="desc">pomodoro, mozzarella di bufala, origano, basilico</div></div>
+        <div class="item"><div class="item-head"><div class="name">Napoli <sup>(4-7)</sup></div><div class="price">€ 7.50</div></div><div class="desc">pomodoro, mozzarella, alici</div></div>
+        <div class="item"><div class="item-head"><div class="name">Romana <sup>(4-7)</sup></div><div class="price">€ 7.50</div></div><div class="desc">pomodoro, mozzarella, alici, capperi</div></div>
+        <div class="item"><div class="item-head"><div class="name">Cotto <sup>(7)</sup></div><div class="price">€ 7.50</div></div><div class="desc">pomodoro, mozzarella, prosciutto cotto</div></div>
+        <div class="item"><div class="item-head"><div class="name">Wurstel <sup>(7)</sup></div><div class="price">€ 7.50</div></div><div class="desc">pomodoro, mozzarella, wurstel</div></div>
+        <div class="item"><div class="item-head"><div class="name">Funghi <sup>(7)</sup> <span class="tag veg">🌿</span></div><div class="price">€ 7.50</div></div><div class="desc">pomodoro, mozzarella, champignon</div></div>
+        <div class="item"><div class="item-head"><div class="name">Salsiccia <sup>(7)</sup></div><div class="price">€ 7.50</div></div><div class="desc">pomodoro, mozzarella, salsiccia</div></div>
+        <div class="item"><div class="item-head"><div class="name">Diavola <sup>(7)</sup></div><div class="price">€ 7.50</div></div><div class="desc">pomodoro, mozzarella, salamino piccante</div></div>
+        <div class="item"><div class="item-head"><div class="name">Melanzane <sup>(7)</sup> <span class="tag veg">🌿</span> <span class="tag frozen">❄</span></div><div class="price">€ 7.50</div></div><div class="desc">pomodoro, mozzarella, melanzane</div></div>
+        <div class="item"><div class="item-head"><div class="name">Crudo <sup>(7)</sup></div><div class="price">€ 8.00</div></div><div class="desc">pomodoro, mozzarella, prosciutto crudo</div></div>
+        <div class="item"><div class="item-head"><div class="name">Prosciutto e funghi <sup>(7)</sup></div><div class="price">€ 8.50</div></div><div class="desc">pomodoro, mozzarella, prosciutto cotto, champignon</div></div>
+        <div class="item"><div class="item-head"><div class="name">Quattro stagioni <sup>(7)</sup></div><div class="price">€ 8.50</div></div><div class="desc">pomodoro, mozzarella, prosciutto cotto, funghi champignon, olive, carciofi</div></div>
+        <div class="item"><div class="item-head"><div class="name">Capricciosa <sup>(7)</sup></div><div class="price">€ 8.50</div></div><div class="desc">pomodoro, mozzarella, prosciutto cotto, wurstel, funghi champignon, olive, carciofi</div></div>
+        <div class="item"><div class="item-head"><div class="name">Porcini <sup>(7)</sup> <span class="tag frozen">❄</span></div><div class="price">€ 9.00</div></div><div class="desc">pomodoro, mozzarella, funghi porcini</div></div>
+        <div class="item"><div class="item-head"><div class="name">Vegetariana <sup>(7)</sup> <span class="tag veg">🌿</span> <span class="tag frozen">❄</span></div><div class="price">€ 9.00</div></div><div class="desc">pomodoro, mozzarella, verdure miste</div></div>
+        <div class="item"><div class="item-head"><div class="name">Tonno e cipolla <sup>(4-7)</sup></div><div class="price">€ 9.00</div></div><div class="desc">pomodoro, mozzarella, tonno, cipolla, basilico</div></div>
+        <div class="item"><div class="item-head"><div class="name">Bismark <sup>(3-7)</sup></div><div class="price">€ 9.00</div></div><div class="desc">pomodoro, mozzarella, prosciutto cotto, asparagi, uovo</div></div>
+        <div class="item"><div class="item-head"><div class="name">S.R.P. <sup>(7)</sup></div><div class="price">€ 9.00</div></div><div class="desc">pomodoro, mozzarella, speck, rucola, parmigiano</div></div>
+        <div class="item"><div class="item-head"><div class="name">Sport <sup>(3-7)</sup></div><div class="price">€ 9.00</div></div><div class="desc">pomodoro, mozzarella, prosciutto cotto, wurstel, funghi champignon, olive, uovo, carciofi</div></div>
+        <div class="item"><div class="item-head"><div class="name">Rosa dei Venti <sup>(7)</sup></div><div class="price">€ 9.00</div></div><div class="desc">pomodoro, mozzarella, prosciutto crudo, salsiccia, crema tartufo, porcini</div></div>
+      </div>
+    </section>
+
+    <section id="calzoni">
+      <div class="section-title"><h2>Calzoni</h2><span>base ripieno mozzarella · (1-7)</span></div>
+      <div class="grid">
+        <div class="item"><div class="item-head"><div class="name">Calzone prosciutto</div><div class="price">€ 7.50</div></div><div class="desc">mozzarella, prosciutto cotto</div></div>
+        <div class="item"><div class="item-head"><div class="name">Calzone verdure <span class="tag veg">🌿</span></div><div class="price">€ 8.50</div></div><div class="desc">mozzarella, verdure miste</div></div>
+        <div class="item"><div class="item-head"><div class="name">Calzone farcito</div><div class="price">€ 8.50</div></div><div class="desc">mozzarella, prosciutto cotto, wurstel, funghi champignon, carciofi, olive</div></div>
+        <div class="item"><div class="item-head"><div class="name">Calzone gorgonzola</div><div class="price">€ 9.00</div></div><div class="desc">mozzarella, gorgonzola, prosciutto crudo</div></div>
+        <div class="item"><div class="item-head"><div class="name">Calzone Sport</div><div class="price">€ 9.00</div></div><div class="desc">mozzarella, salsiccia, prosciutto crudo, uovo sodo, porcini</div></div>
+        <div class="item"><div class="item-head"><div class="name">Calzone Rosa dei Venti</div><div class="price">€ 9.00</div></div><div class="desc">mozzarella, prosciutto crudo, formaggi misti, uovo, crema tartufo</div></div>
+      </div>
+    </section>
+
+    <section id="focacce">
+      <div class="section-title"><h2>Focacce</h2><span>base pizza e mozzarella · (1-7)</span></div>
+      <div class="grid">
+        <div class="item"><div class="item-head"><div class="name">Crudo <sup>(7)</sup></div><div class="price">€ 8.00</div></div><div class="desc">mozzarella, prosciutto crudo</div></div>
+        <div class="item"><div class="item-head"><div class="name">Cotto <sup>(7)</sup></div><div class="price">€ 7.50</div></div><div class="desc">mozzarella, prosciutto cotto</div></div>
+        <div class="item"><div class="item-head"><div class="name">Porcini <sup>(7)</sup> <span class="tag veg">🌿</span> <span class="tag frozen">❄</span></div><div class="price">€ 9.00</div></div><div class="desc">mozzarella, porcini</div></div>
+        <div class="item"><div class="item-head"><div class="name">Porcini e crudo <sup>(7)</sup> <span class="tag frozen">❄</span></div><div class="price">€ 10.00</div></div><div class="desc">mozzarella, porcini, prosciutto crudo</div></div>
+        <div class="item"><div class="item-head"><div class="name">Rucola <sup>(7)</sup> <span class="tag veg">🌿</span></div><div class="price">€ 8.00</div></div><div class="desc">mozzarella, rucola, parmigiano</div></div>
+        <div class="item"><div class="item-head"><div class="name">Primavera <sup>(4-7)</sup></div><div class="price">€ 9.00</div></div><div class="desc">mozzarella, tonno, pomodorini, cipolla, basilico</div></div>
+        <div class="item"><div class="item-head"><div class="name">Quattro formaggi <sup>(7)</sup> <span class="tag veg">🌿</span></div><div class="price">€ 9.00</div></div><div class="desc">mozzarella, formaggi misti</div></div>
+        <div class="item"><div class="item-head"><div class="name">Boscaiola <sup>(7)</sup></div><div class="price">€ 9.00</div></div><div class="desc">mozzarella, salsiccia, porcini</div></div>
+        <div class="item"><div class="item-head"><div class="name">Delizia <sup>(7)</sup> <span class="tag veg">🌿</span></div><div class="price">€ 9.00</div></div><div class="desc">mozzarella, pomodorini, rucola, parmigiano</div></div>
+        <div class="item"><div class="item-head"><div class="name">Forte <sup>(7)</sup> <span class="tag veg">🌿</span></div><div class="price">€ 9.00</div></div><div class="desc">mozzarella, formaggi misti, cipolla, pepe</div></div>
+        <div class="item"><div class="item-head"><div class="name">Al bacio <sup>(4-7)</sup></div><div class="price">€ 9.00</div></div><div class="desc">mozzarella, zucchine, gamberetti</div></div>
+        <div class="item"><div class="item-head"><div class="name">Zucchine e alici <sup>(4-7)</sup></div><div class="price">€ 8.00</div></div><div class="desc">mozzarella, zucchine, alici</div></div>
+        <div class="item"><div class="item-head"><div class="name">Sant’Antonio <sup>(7)</sup></div><div class="price">€ 9.00</div></div><div class="desc">mozzarella, cicoria, salsiccia</div></div>
+        <div class="item"><div class="item-head"><div class="name">Capriccio al tartufo <sup>(7)</sup></div><div class="price">€ 9.00</div></div><div class="desc">mozzarella, salsa tartufo, salsiccia</div></div>
+        <div class="item"><div class="item-head"><div class="name">Capriccio ai carciofi <sup>(7)</sup></div><div class="price">€ 9.00</div></div><div class="desc">mozzarella, salsa carciofi, prosciutto cotto, parmigiano</div></div>
+        <div class="item"><div class="item-head"><div class="name">Verdure <sup>(7)</sup> <span class="tag veg">🌿</span> <span class="tag frozen">❄</span></div><div class="price">€ 9.00</div></div><div class="desc">mozzarella, verdure miste</div></div>
+      </div>
+    </section>
+
+    <section id="schiacce">
+      <div class="section-title"><h2>Schiacce</h2><span>base pizza · (1)</span></div>
+      <div class="grid">
+        <div class="item"><div class="item-head"><div class="name">All’olio</div><div class="price">€ 4.50</div></div></div>
+        <div class="item"><div class="item-head"><div class="name">Alla cipolla</div><div class="price">€ 7.00</div></div></div>
+        <div class="item"><div class="item-head"><div class="name">Al prosciutto crudo</div><div class="price">€ 7.50</div></div></div>
+        <div class="item"><div class="item-head"><div class="name">Maxi al crudo</div><div class="price">€ 10.00</div></div></div>
+        <div class="item"><div class="item-head"><div class="name">Verdure <span class="tag frozen">❄</span></div><div class="price">€ 9.00</div></div></div>
+        <div class="item"><div class="item-head"><div class="name">Burrata e pomodorini <sup>(7)</sup> <span class="tag veg">🌿</span></div><div class="price">€ 9.00</div></div></div>
+        <div class="item"><div class="item-head"><div class="name">Burrata e alici <sup>(4-7)</sup></div><div class="price">€ 9.00</div></div></div>
+        <div class="item"><div class="item-head"><div class="name">Burrata salmone e rucola <sup>(4-7)</sup></div><div class="price">€ 9.00</div></div><div class="desc">chiedere se è disponibile</div></div>
+      </div>
+    </section>
+
+    <section id="pomodoro">
+      <div class="section-title"><h2>Pomodoro</h2><span>base pomodoro · (1)</span></div>
+      <div class="grid">
+        <div class="item"><div class="item-head"><div class="name">Marinara <span class="tag veg">🌿</span></div><div class="price">€ 6.00</div></div><div class="desc">pomodoro, aglio, origano, prezzemolo</div></div>
+        <div class="item"><div class="item-head"><div class="name">Cipolla</div><div class="price">€ 7.00</div></div><div class="desc">pomodoro, cipolla, origano, peperoncino</div></div>
+        <div class="item"><div class="item-head"><div class="name">Frutti di mare <sup>(14)</sup></div><div class="price">€ 9.00</div></div><div class="desc">pomodoro, frutti di mare, aglio, prezzemolo</div></div>
+        <div class="item"><div class="item-head"><div class="name">Vegana <span class="tag frozen">❄</span></div><div class="price">€ 9.00</div></div><div class="desc">pomodoro, verdure miste</div></div>
+      </div>
+    </section>
+
+    <div class="note-card">
+        Ad ogni modifica degli ingredienti il prezzo può variare da € 0.50 a € 2.00.
+        Per allergie si prega di leggere la tabella in fondo al menù o chiedere al personale di sala.
+      </div>
+
+    <section id="cucina">
+      <div class="section-title"><h2>La cucina propone</h2></div>
+      <div class="grid">
+        <div class="item"><div class="item-head"><div class="name">Pici all’aglione <sup>(1-3)</sup> <span class="tag veg">🌿</span></div><div class="price">€ 10.00</div></div></div>
+        <div class="item"><div class="item-head"><div class="name">Tagliatelle al ragù <sup>(1-3)</sup></div><div class="price">€ 12.00</div></div></div>
+        <div class="item"><div class="item-head"><div class="name">Grigliata di maiale</div><div class="price">€ 13.00</div></div><div class="desc">bistecca, salsiccia, pancetta</div></div>
+        <div class="item"><div class="item-head"><div class="name">Tagliata di vitella con rucola e parmigiano</div><div class="price">€ 15.00</div></div></div>
+        <div class="item"><div class="item-head"><div class="name">Tagliata di vitella con rucola e pomodorini</div><div class="price">€ 15.00</div></div></div>
+        <div class="item"><div class="item-head"><div class="name">Tagliata di vitella con parmigiano e pomodorini</div><div class="price">€ 15.00</div></div></div>
+        <div class="item"><div class="item-head"><div class="name">Tagliata di vitella tricolore</div><div class="price">€ 15.00</div></div><div class="desc">rucola, parmigiano, pomodorini</div></div>
+        <div class="item"><div class="item-head"><div class="name">Petto di pollo grigliato</div><div class="price">€ 9.00</div></div></div>
+        <div class="item"><div class="item-head"><div class="name">Petto di pollo grigliato e patatine</div><div class="price">€ 11.00</div></div></div>
+        <div class="item"><div class="item-head"><div class="name">Bistecca alla fiorentina</div><div class="price">€ 5.00 all’hg</div></div></div>
+        <div class="item"><div class="item-head"><div class="name">Cotoletta di pollo con patatine</div><div class="price">€ 12.00</div></div></div>
+        <div class="item"><div class="item-head"><div class="name">Salsiccia alla griglia con patatine</div><div class="price">€ 10.00</div></div></div>
+        <div class="item"><div class="item-head"><div class="name">Wurstel alla griglia con patatine</div><div class="price">€ 8.00</div></div></div>
+        <div class="item"><div class="item-head"><div class="name">Insalata mista <span class="tag veg">🌿</span></div><div class="price">€ 5.00</div></div></div>
+        <div class="item"><div class="item-head"><div class="name">Verdure cotte <span class="tag veg">🌿</span></div><div class="price">€ 5.00</div></div></div>
+        <div class="item"><div class="item-head"><div class="name">Verdure alla griglia <span class="tag veg">🌿</span></div><div class="price">€ 5.00</div></div></div>
+        <div class="item"><div class="item-head"><div class="name">Fagioli cannellini conditi <span class="tag veg">🌿</span></div><div class="price">€ 5.00</div></div></div>
+      </div>
+    </section>
+
+    <section id="dolci">
+      <div class="section-title"><h2>Dolci</h2></div>
+      <div class="note-card">Per la disponibilità dei dolci chiedere al personale di sala.</div>
+      <div class="grid">
+        <div class="item"><div class="item-head"><div class="name">Panna cotta <sup>(7)</sup></div><div class="price">€ 4.50</div></div><div class="desc">cioccolato, frutti di bosco, mandorlata, caffè</div></div>
+        <div class="item"><div class="item-head"><div class="name">Cream caramel <sup>(7)</sup></div><div class="price">€ 4.50</div></div></div>
+        <div class="item"><div class="item-head"><div class="name">Tiramisù <sup>(1-3-7)</sup></div><div class="price">€ 5.00</div></div></div>
+        <div class="item"><div class="item-head"><div class="name">Uovo al tegamino <sup>(1-3-7)</sup></div><div class="price">€ 5.00</div></div></div>
+        <div class="item"><div class="item-head"><div class="name">Crema catalana <sup>(3-7)</sup></div><div class="price">€ 5.00</div></div></div>
+        <div class="item"><div class="item-head"><div class="name">Zuppa inglese <sup>(1-3-7)</sup></div><div class="price">€ 5.00</div></div></div>
+        <div class="item"><div class="item-head"><div class="name">Mousse <sup>(7)</sup></div><div class="price">€ 5.00</div></div></div>
+        <div class="item"><div class="item-head"><div class="name">Cheesecake <sup>(1-3-7)</sup></div><div class="price">€ 5.00</div></div></div>
+        <div class="item"><div class="item-head"><div class="name">Macedonia</div><div class="price">€ 5.00</div></div></div>
+        <div class="item"><div class="item-head"><div class="name">Cantucci e vin santo</div><div class="price">€ 5.00</div></div></div>
+        <div class="item"><div class="item-head"><div class="name">Sorbetto al limone flute <sup>(7)</sup></div><div class="price">€ 3.00</div></div></div>
+        <div class="item"><div class="item-head"><div class="name">Sgroppino</div><div class="price">€ 4.50</div></div></div>
+        <div class="item"><div class="item-head"><div class="name">Caffè</div><div class="price">€ 1.20</div></div><div class="desc">espresso, decaffeinato, orzo, ginseng</div></div>
+        <div class="item"><div class="item-head"><div class="name">Liquori</div><div class="price">€ 3.00</div></div></div>
+      </div>
+    </section>
+
+    <section id="bevande">
+      <div class="section-title"><h2>Bevande</h2></div>
+      <div class="grid">
+        <div class="item"><div class="item-head"><div class="name">Acqua minerale 0,75 lt</div><div class="price">€ 1.50</div></div><div class="desc">naturale, frizzante</div></div>
+        <div class="item"><div class="item-head"><div class="name">Acqua minerale 1/2 lt</div><div class="price">€ 1.00</div></div></div>
+        <div class="item"><div class="item-head"><div class="name">Acqua Nepi</div><div class="price">€ 1.50</div></div></div>
+
+        <div class="subhead">Vino della casa <sup>(12)</sup> · rosso, bianco, frizzantino</div>
+        <div class="item"><div class="item-head"><div class="name">Caraffa 1 lt</div><div class="price">€ 8.00</div></div></div>
+        <div class="item"><div class="item-head"><div class="name">Caraffa 1/2 lt</div><div class="price">€ 4.50</div></div></div>
+        <div class="item"><div class="item-head"><div class="name">Caraffa 1/4 lt</div><div class="price">€ 2.50</div></div></div>
+
+        <div class="subhead">Bibite</div>
+        <div class="item"><div class="item-head"><div class="name">Lattina</div><div class="price">€ 2.50</div></div><div class="desc">Coca Cola, Coca Cola Zero, Fanta, Sprite</div></div>
+        <div class="item"><div class="item-head"><div class="name">Bottiglia</div><div class="price">€ 5.00</div></div><div class="desc">Coca Cola, Fanta</div></div>
+        <div class="item"><div class="item-head"><div class="name">Coca Cola alla spina 0.3</div><div class="price">€ 3.00</div></div></div>
+        <div class="item"><div class="item-head"><div class="name">Coca Cola alla spina 0.4</div><div class="price">€ 4.00</div></div></div>
+
+        <div class="subhead">Birra alla spina <sup>(1)</sup> · chiara, rossa</div>
+        <div class="item"><div class="item-head"><div class="name">1 lt</div><div class="price">€ 10.00</div></div></div>
+        <div class="item"><div class="item-head"><div class="name">0.4</div><div class="price">€ 5.00</div></div></div>
+        <div class="item"><div class="item-head"><div class="name">0.2</div><div class="price">€ 2.50</div></div></div>
+      </div>
+    </section>
+
+    <section id="birre">
+      <div class="section-title"><h2>Birre in Bottiglia</h2></div>
+      <div class="grid">
+        <div class="item"><div class="item-head"><div class="name">Moretti</div><div class="price">€ 3.00</div></div><div class="desc">66 cl · Blonde · Alc. 4,6%</div></div>
+        <div class="item"><div class="item-head"><div class="name">Ichnusa non filtrata</div><div class="price">€ 3.50</div></div><div class="desc">50 cl · Blonde · Alc. 5%</div></div>
+        <div class="item"><div class="item-head"><div class="name">Messina Cristalli Sale</div><div class="price">€ 3.50</div></div><div class="desc">50 cl · Blonde · Alc. 5%</div></div>
+        <div class="item"><div class="item-head"><div class="name">Weihenstephane</div><div class="price">€ 5.00</div></div><div class="desc">50 cl · Weiss · Alc. 5,5%</div></div>
+        <div class="item"><div class="item-head"><div class="name">Lagunitas IPA</div><div class="price">€ 5.00</div></div><div class="desc">33,3 cl · India Pale Ale · Alc. 6,2%</div></div>
+        <div class="item"><div class="item-head"><div class="name">Kwak</div><div class="price">€ 12.00</div></div><div class="desc">75 cl · Red · Alc. 8,4%</div></div>
+        <div class="item"><div class="item-head"><div class="name">La Chouffe</div><div class="price">€ 12.00</div></div><div class="desc">75 cl · Blonde · Alc. 8%</div></div>
+        <div class="item"><div class="item-head"><div class="name">MC Chouffe</div><div class="price">€ 12.00</div></div><div class="desc">75 cl · Red · Alc. 8%</div></div>
+        <div class="item"><div class="item-head"><div class="name">Leffe Blonde</div><div class="price">€ 12.00</div></div><div class="desc">75 cl · Blonde · Alc. 6,6%</div></div>
+        <div class="item"><div class="item-head"><div class="name">Leffe Ambrée</div><div class="price">€ 12.00</div></div><div class="desc">75 cl · Red · Alc. 6,6%</div></div>
+      </div>
+    </section>
+
+    <section id="vini">
+      <div class="section-title"><h2>Vini in Bottiglia</h2><span>(12)</span></div>
+
+      <div class="wine-group">
+        <h3>Bianchi</h3>
+        <div class="grid">
+          <div class="item"><div class="item-head"><div class="name">Plinio</div><div class="price">€ 18.00</div></div><div class="desc">Vermentino di Toscana Bruni · 12,5% vol.</div></div>
+          <div class="item"><div class="item-head"><div class="name">Fattucchiero</div><div class="price">€ 25.00</div></div><div class="desc">Bianco di Pitigliano · 12% vol.</div></div>
+          <div class="item"><div class="item-head"><div class="name">Muller Thurgau</div><div class="price">€ 28.00</div></div><div class="desc">St. Pauls · 12,5% vol.</div></div>
+          <div class="item"><div class="item-head"><div class="name">Justina Gewurztraminer</div><div class="price">€ 24.00</div></div><div class="desc">St. Pauls · 14% vol.</div></div>
+          <div class="item"><div class="item-head"><div class="name">Il Cerchio</div><div class="price">€ 18.00</div></div><div class="desc">Ansonica, Costa dell’Argentario · 13,5% vol.</div></div>
+        </div>
+      </div>
+
+      <div class="wine-group">
+        <h3>Rossi</h3>
+        <div class="grid">
+          <div class="item"><div class="item-head"><div class="name">Marteto</div><div class="price">€ 18.00</div></div><div class="desc">Morellino di Scansano Bruni · 14% vol.</div></div>
+          <div class="item"><div class="item-head"><div class="name">Sassocupo</div><div class="price">€ 18.00</div></div><div class="desc">Chianti Superiore · 14% vol.</div></div>
+          <div class="item"><div class="item-head"><div class="name">Terenzi</div><div class="price">€ 18.00</div></div><div class="desc">Morellino di Scansano · 14% vol.</div></div>
+          <div class="item"><div class="item-head"><div class="name">Campo Bastiglia</div><div class="price">€ 25.00</div></div><div class="desc">Valpolicella Ripasso · 13,5% vol.</div></div>
+          <div class="item"><div class="item-head"><div class="name">Cantina della Luce</div><div class="price">€ 18.00</div></div><div class="desc">Ciliegiolo · 12,5% vol.</div></div>
+          <div class="item"><div class="item-head"><div class="name">Sciadatto</div><div class="price">€ 25.00</div></div><div class="desc">Rosso di Sovana · 12,5% vol.</div></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="note-card">
+      <strong>Legenda:</strong>
+      <div class="legend">
+        <span>🌿 vegetariano</span>
+        <span>❄ utilizzo alimento congelato</span>
+        <span>I numeri tra parentesi sono i riferimenti allergeni riportati nel menù originale.</span>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    La Rosa dei Venti · Menù trascritto dal PDF originale
+  </footer>
+
+  <script>
+    const search = document.getElementById('search');
+    search.addEventListener('input', () => {
+      const q = search.value.trim().toLowerCase();
+      document.querySelectorAll('.item').forEach(item => {
+        item.classList.toggle('hidden', q && !item.innerText.toLowerCase().includes(q));
+      });
+      document.querySelectorAll('section').forEach(section => {
+        const visible = [...section.querySelectorAll('.item')].some(x => !x.classList.contains('hidden'));
+        if(q && section.querySelectorAll('.item').length){
+          section.classList.toggle('hidden', !visible);
+        } else {
+          section.classList.remove('hidden');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
