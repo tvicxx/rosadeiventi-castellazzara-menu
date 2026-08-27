@@ -237,14 +237,88 @@
       color: var(white);
       margin-bottom: 8px;
     }
-    header img{
-      width: clamp(140px, 25vw, 320px); /* Dimensione dinamica e controllata */
-      height: auto;                     /* Mantiene le proporzioni originali */
-      display: block;
-      margin: 0 auto;                   /* Centra il logo orizzontalmente */
+    .hidden{display:none !important}
+
+    /* Stile Pulsante Allergeni */
+    .btn-allergeni{
+      display:inline-block;
+      margin-top:12px;
+      padding:8px 16px;
+      background:var(--blue);
+      color:#fff;
+      border:none;
+      border-radius:8px;
+      font-size:.9rem;
+      font-weight:bold;
+      cursor:pointer;
+      box-shadow:0 2px 6px rgba(15,93,183,.25);
+      transition:background .2s ease, transform .1s ease;
+    }
+    .btn-allergeni:hover{
+      background:var(--blue-dark);
+    }
+    .btn-allergeni:active{
+      transform:scale(0.98);
     }
 
-    .hidden{display:none !important}
+    /* Stile Modale Popup */
+    .modal-overlay{
+      position:fixed;
+      inset:0;
+      z-index:9999;
+      background:rgba(10,40,70,.75);
+      backdrop-filter:blur(4px);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+      opacity:0;
+      pointer-events:none;
+      transition:opacity .25s ease;
+    }
+    .modal-overlay.active{
+      opacity:1;
+      pointer-events:auto;
+    }
+    .modal-content{
+      position:relative;
+      background:#fff;
+      border-radius:16px;
+      max-width:92vw;
+      max-height:90vh;
+      box-shadow:0 20px 50px rgba(0,0,0,.35);
+      overflow:hidden;
+      display:flex;
+      flex-direction:column;
+    }
+    .modal-content img{
+      display:block;
+      max-width:100%;
+      max-height:85vh;
+      object-fit:contain;
+    }
+    .modal-close{
+      position:absolute;
+      top:10px;
+      right:10px;
+      background:rgba(0,0,0,.6);
+      color:#fff;
+      border:none;
+      border-radius:50%;
+      width:34px;
+      height:34px;
+      font-size:18px;
+      font-weight:bold;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      transition:background .2s;
+    }
+    .modal-close:hover{
+      background:rgba(0,0,0,.85);
+    }
+
     @media (max-width:760px){
       .hero{padding-top:36px}
       .grid{grid-template-columns:1fr}
@@ -256,9 +330,8 @@
 <body>
   <header class="hero">
     <div class="brand">
-
       <div class="titleSite"><h2>PIZZERIA</h2></div>
-      <img src="logoRDV1.png">
+      <img src="logoRDV1.png" alt="La Rosa dei Venti">
       <p class="intro">
         Dopo 60 anni di gestione del bar-pizzeria “Bar Sport”, la famiglia Furzi decide di separare le due attività e far nascere,
         nel 2006, la pizzeria “La Rosa dei Venti”. La pizzeria è a conduzione familiare e offre, oltre ad una svariata scelta di pizze
@@ -281,7 +354,7 @@
       <a href="#pomodoro">Pomodoro</a>
       <a href="#cucina">Cucina</a>
       <a href="#dolci">Dolci</a>
-      <a href="#drinks">Drinks</a>
+      <a href="#bevande">Bevande</a>
       <a href="#birre">Birre</a>
       <a href="#vini">Vini</a>
     </nav>
@@ -415,7 +488,7 @@
     <div class="note-card">
         Ad ogni modifica degli ingredienti il prezzo può variare da € 0.50 a € 2.00.
         Per allergie si prega di leggere la tabella in fondo al menù o chiedere al personale di sala.
-      </div>
+    </div>
 
     <section id="cucina">
       <div class="section-title"><h2>La cucina propone</h2></div>
@@ -529,35 +602,84 @@
       </div>
     </section>
 
+    <!-- Box Legenda con Bottone Allergeni -->
     <div class="note-card">
       <strong>Legenda:</strong>
       <div class="legend">
         <span>🌿 vegetariano</span>
         <span>❄ utilizzo alimento congelato</span>
-        <span>I numeri tra parentesi sono i riferimenti allergeni riportati nel menù originale.</span>
+      </div>
+      <div style="margin-top: 14px;">
+        <button id="openAllergeni" class="btn-allergeni" type="button">📋 Consulta Tabella Allergeni</button>
       </div>
     </div>
   </main>
 
+  <!-- Modale Popup Allergeni -->
+  <div id="modalAllergeni" class="modal-overlay" aria-hidden="true" role="dialog">
+    <div class="modal-content">
+      <button class="modal-close" id="closeAllergeni" aria-label="Chiudi">&times;</button>
+      <img src="allergeni.jpeg" alt="Tabella Allergeni">
+    </div>
+  </div>
+
   <footer>
-    La Rosa dei Venti · Menù trascritto dal PDF originale
+    <div>La Rosa dei Venti</div>
+    <div>Piazza Martiri di Niccioleta snc</div>
+    <div>58034 Castell'Azzara (Gr)</div>
+    <div>Tel. 338 6816787</div>
   </footer>
 
   <script>
+    // Gestione Ricerca (se presente input #search)
     const search = document.getElementById('search');
-    search.addEventListener('input', () => {
-      const q = search.value.trim().toLowerCase();
-      document.querySelectorAll('.item').forEach(item => {
-        item.classList.toggle('hidden', q && !item.innerText.toLowerCase().includes(q));
+    if (search) {
+      search.addEventListener('input', () => {
+        const q = search.value.trim().toLowerCase();
+        document.querySelectorAll('.item').forEach(item => {
+          item.classList.toggle('hidden', q && !item.innerText.toLowerCase().includes(q));
+        });
+        document.querySelectorAll('section').forEach(section => {
+          const visible = [...section.querySelectorAll('.item')].some(x => !x.classList.contains('hidden'));
+          if (q && section.querySelectorAll('.item').length) {
+            section.classList.toggle('hidden', !visible);
+          } else {
+            section.classList.remove('hidden');
+          }
+        });
       });
-      document.querySelectorAll('section').forEach(section => {
-        const visible = [...section.querySelectorAll('.item')].some(x => !x.classList.contains('hidden'));
-        if(q && section.querySelectorAll('.item').length){
-          section.classList.toggle('hidden', !visible);
-        } else {
-          section.classList.remove('hidden');
-        }
-      });
+    }
+
+    // Gestione Popup Modal Allergeni
+    const modal = document.getElementById('modalAllergeni');
+    const openBtn = document.getElementById('openAllergeni');
+    const closeBtn = document.getElementById('closeAllergeni');
+
+    const openModal = () => {
+      modal.classList.add('active');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    };
+
+    const closeModal = () => {
+      modal.classList.remove('active');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    };
+
+    openBtn.addEventListener('click', openModal);
+    closeBtn.addEventListener('click', closeModal);
+
+    // Chiudi cliccando sullo sfondo scuro
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
+    });
+
+    // Chiudi con il tasto ESC
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('active')) {
+        closeModal();
+      }
     });
   </script>
 </body>
