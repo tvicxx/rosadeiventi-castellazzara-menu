@@ -234,8 +234,14 @@
       font-size: 1.5rem;
       font-weight: bold;
       font-style:italic;
-      color: var(white);
+      color: var(--white);
       margin-bottom: 8px;
+    }
+    header img{
+      width: clamp(140px, 25vw, 320px); /* Dimensione dinamica e controllata */
+      height: auto;                     /* Mantiene le proporzioni originali */
+      display: block;
+      margin: 0 auto;                   /* Centra il logo orizzontalmente */
     }
     .hidden{display:none !important}
 
