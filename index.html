@@ -237,6 +237,13 @@
       color: var(white);
       margin-bottom: 8px;
     }
+    header img{
+      width: clamp(140px, 25vw, 320px); /* Dimensione dinamica e controllata */
+      height: auto;                     /* Mantiene le proporzioni originali */
+      display: block;
+      margin: 0 auto;                   /* Centra il logo orizzontalmente */
+    }
+
     .hidden{display:none !important}
     @media (max-width:760px){
       .hero{padding-top:36px}
