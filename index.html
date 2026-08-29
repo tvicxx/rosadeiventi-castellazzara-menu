@@ -116,7 +116,7 @@
     main{
       max-width:1180px;
       margin:0 auto;
-      padding:20px 16px 60px;
+      padding:20px 16px 20px;
     }
     section{
       scroll-margin-top:78px;
@@ -216,12 +216,59 @@
       font-style:italic;
       margin:14px 0 10px;
     }
+    
+    /* Stile Sezione Contatti / Info */
+    .info-box{
+      background:rgba(255,255,255,.95);
+      border:1px solid #dbe9f8;
+      border-radius:16px;
+      padding:24px 20px;
+      margin:24px 0 0;
+      text-align:center;
+      box-shadow:var(--shadow);
+    }
+    .info-box .info-title{
+      font-size:1.3rem;
+      font-weight:900;
+      color:var(--blue-dark);
+      font-style:italic;
+      margin-bottom:6px;
+    }
+    .info-box .info-line{
+      color:#4f657a;
+      font-size:.95rem;
+      margin:3px 0;
+    }
+    .info-box .info-tel{
+      margin-top:8px;
+      font-weight:bold;
+    }
+    .info-box .info-tel a{
+      color:var(--blue);
+      text-decoration:none;
+    }
+    .info-box .info-tel a:hover{
+      text-decoration:underline;
+    }
+
+    /* Stile Footer Discreto */
     footer{
       text-align:center;
-      padding:26px 16px 40px;
-      color:#6c7d8d;
-      font-size:.9rem;
+      padding:20px 16px 36px;
+      color:#8a99a8;
+      font-size:.78rem;
+      letter-spacing:.02em;
     }
+    footer a{
+      color:#60758a;
+      text-decoration:none;
+      transition:color .2s ease;
+    }
+    footer a:hover{
+      color:var(--blue);
+      text-decoration:underline;
+    }
+
     .legend{
       display:flex;
       gap:14px;
@@ -238,10 +285,10 @@
       margin-bottom: 8px;
     }
     header img{
-      width: clamp(140px, 25vw, 320px); /* Dimensione dinamica e controllata */
-      height: auto;                     /* Mantiene le proporzioni originali */
+      width: clamp(140px, 25vw, 320px);
+      height: auto;
       display: block;
-      margin: 0 auto;                   /* Centra il logo orizzontalmente */
+      margin: 0 auto;
     }
     .hidden{display:none !important}
 
@@ -619,7 +666,21 @@
         <button id="openAllergeni" class="btn-allergeni" type="button">📋 Consulta Tabella Allergeni</button>
       </div>
     </div>
+
+    <!-- Sezione Contatti & Info Locale -->
+    <div class="info-box">
+      <div class="info-title">La Rosa dei Venti</div>
+      <div class="info-line">Piazza Martiri di Niccioleta snc</div>
+      <div class="info-line">58034 Castell'Azzara (GR)</div>
+      <div class="info-line info-tel">Tel. <a href="tel:3386816787">338 6816787</a></div>
+    </div>
+
   </main>
+
+  <!-- Footer Discreto Crediti -->
+  <footer>
+    Made with care by Tommaso Vicarelli · Telegram: <a href="https://t.me/tvicxx" target="_blank" rel="noopener noreferrer">@tvicxx</a>
+  </footer>
 
   <!-- Modale Popup Allergeni -->
   <div id="modalAllergeni" class="modal-overlay" aria-hidden="true" role="dialog">
@@ -628,13 +689,6 @@
       <img src="allergeni.jpeg" alt="Tabella Allergeni">
     </div>
   </div>
-
-  <footer>
-    <div>La Rosa dei Venti</div>
-    <div>Piazza Martiri di Niccioleta snc</div>
-    <div>58034 Castell'Azzara (Gr)</div>
-    <div>Tel. 338 6816787</div>
-  </footer>
 
   <script>
     // Gestione Ricerca (se presente input #search)
